@@ -1,121 +1,128 @@
-### Normal characters
+### 普通字符（Normal characters）
 
-Expression | Description
+表达式 | 说明
 :--|:--
-`.` or `[^\n\r]` | any character *excluding* a newline or carriage return
-`[A-Za-z]` | alphabet
-`[a-z]` | lowercase alphabet
-`[A-Z]` | uppercase alphabet
-`\d` or `[0-9]` | digit
-`\D` or `[^0-9]` | non-digit
-`_` | underscore
-`\w` or `[A-Za-z0-9_]` | alphabet, digit or underscore
-`\W` or `[^A-Za-z0-9_]` | inverse of `\w`
-`\S` | inverse of `\s`
+`.` 或 `[^\n\r]` | 除换行符与回车符之外的任意单个字符（用于匹配“任何字符”）
+`[A-Za-z]` | 任意英文字母（大小写均可）
+`[a-z]` | 小写英文字母
+`[A-Z]` | 大写英文字母
+`\d` 或 `[0-9]` | 数字（digit）
+`\D` 或 `[^0-9]` | 非数字
+`_` | 下划线
+`\w` 或 `[A-Za-z0-9_]` | 单词字符：字母、数字或下划线（常用于匹配变量名、用户名等）
+`\W` 或 `[^A-Za-z0-9_]` | `\w` 的反义，即非单词字符
+`\S` | `\s` 的反义，即非空白字符
 
-### Whitespace characters
+> 提示：`.` 在绝大多数正则引擎中默认不匹配换行符。如需跨行匹配，请使用 `s`（dotAll）标志。
 
-Expression | Description
+### 空白字符（Whitespace characters）
+
+表达式 | 说明
 :--|:--
-` ` | space
-`\t` | tab
-`\n` | newline
-`\r` | carriage return
-`\s` | space, tab, newline or carriage return
+` ` | 空格
+`\t` | 制表符（Tab）
+`\n` | 换行符（Line feed）
+`\r` | 回车符（Carriage return）
+`\s` | 任意空白字符：空格、制表符、换行符或回车符（常用 `\s+` 匹配连续的空白）
 
-### Character set
+### 字符集（Character set）
 
-Expression | Description
+表达式 | 说明
 :--|:--
-`[xyz]` | either `x`, `y` or `z`
-`[^xyz]` | neither `x`, `y` nor `z`
-`[1-3]` | either `1`, `2` or `3`
-`[^1-3]` | neither `1`, `2` nor `3`
+`[xyz]` | 匹配 `x`、`y` 或 `z` 中的任意一个字符
+`[^xyz]` | 匹配既不是 `x`、`y` 也不是 `z` 的任意字符（取反字符集）
+`[1-3]` | 匹配 `1`、`2` 或 `3` 中的任意一个
+`[^1-3]` | 匹配除 `1`、`2`、`3` 之外的任意字符
 
-- Think of a character set as an `OR` operation on the single characters that are enclosed between the square brackets.
-- Use `^` after the opening `[` to “negate” the character set.
-- Within a character set, `.` means a literal period.
+- 可以把字符集理解成对方括号内各个字符的“或（OR）”操作。
+- 在开头的 `[` 之后加上 `^` 即可“取反”整个字符集。
+- 在字符集内部，`.` 表示字面意义的句点（不需要转义）。
 
-### Characters that require escaping
+### 需要转义的字符（Characters that require escaping）
 
-#### Outside a character set
+#### 字符集外部（Outside a character set）
 
-Expression | Description
+表达式 | 说明
 :--|:--
-`\.` | period
-`\^` | caret
-`\$` | dollar sign
-`\|` | pipe
-`\\` | back slash
-`\/` | forward slash
-`\(` | opening bracket
-`\)` | closing bracket
-`\[` | opening square bracket
-`\]` | closing square bracket
-`\{` | opening curly bracket
-`\}` | closing curly bracket
+`\.` | 句点（`.`）
+`\^` | 脱字符（`^`）
+`\$` | 美元符号（`$`）
+`\|` | 竖线/管道符（`|`）
+`\\` | 反斜杠（`\`）
+`\/` | 正斜杠（`/`，部分语言/分隔符语境下需要）
+`\(` | 左圆括号（`(`）
+`\)` | 右圆括号（`)`）
+`\[` | 左方括号（`[`）
+`\]` | 右方括号（`]`）
+`\{` | 左花括号（`{`）
+`\}` | 右花括号（`}`）
 
-#### Inside a character set
+#### 字符集内部（Inside a character set）
 
-Expression | Description
+表达式 | 说明
 :--|:--
-`\\` | back slash
-`\]` | closing square bracket
+`\\` | 反斜杠（`\`）
+`\]` | 右方括号（`]`）
 
-- A `^` must be escaped only if it occurs immediately after the opening `[` of the character set.
-- A `-` must be escaped only if it occurs between two alphabets or two digits.
+- `^` 仅在紧接字符集开头的 `[` 之后出现时才需要转义。
+- `-` 仅当位于两个字母或两个数字之间（表示范围）时才需要转义。
 
-### Quantifiers
+### 量词（Quantifiers）
 
-Expression | Description
+表达式 | 说明
 :--|:--
-`{2}` | exactly 2
-`{2,}` | at least 2
-`{2,7}` | at least 2 but no more than 7
-`*` | 0 or more
-`+` | 1 or more
-`?` | exactly 0 or 1
+`{2}` | 恰好 2 次
+`{2,}` | 至少 2 次
+`{2,7}` | 至少 2 次，但不超过 7 次
+`*` | 0 次或多次（等价于 `{0,}`）
+`+` | 1 次或多次（等价于 `{1,}`）
+`?` | 0 次或 1 次（等价于 `{0,1}`）
 
-- The quantifier goes *after* the expression to be quantified.
+- 量词放在**被修饰的表达式之后**。
+- 在量词后加 `?`（如 `*?`、`+?`）可切换为“惰性（非贪婪）”匹配，即尽可能少地匹配字符。
 
-### Boundaries
+### 边界（Boundaries）
 
-Expression | Description
+表达式 | 说明
 :--|:--
-`^` | start of string
-`$` | end of string
-`\b` | word boundary
+`^` | 字符串的开头
+`$` | 字符串的结尾
+`\b` | 单词边界（word boundary）
 
-- How word boundary matching works:
-    - At the beginning of the string if the first character is `\w`.
-    - Between two adjacent characters within the string, if the first character is `\w` and the second character is `\W`.
-    - At the end of the string if the last character is `\w`.
+- 单词边界的匹配规则：
+    - 若字符串首字符是 `\w`，则在字符串开头处算一个边界。
+    - 若相邻两个字符中，前一个是 `\w`、后一个是 `\W`，则它们之间是一个边界。
+    - 若字符串末尾字符是 `\w`，则在字符串结尾处算一个边界。
 
-### Matching
+> 提示：多行模式（`m` 标志）下，`^` 和 `$` 会匹配每一行的开头与结尾，而不只是整个字符串的起止。
 
-Expression | Description
+### 匹配（Matching）
+
+表达式 | 说明
 :--|:--
-`foo\|bar` | match either `foo` or `bar`
-`foo(?=bar)` | match `foo` if it’s before `bar`
-`foo(?!bar)` | match `foo` if it’s *not* before `bar`
-`(?<=bar)foo` | match `foo` if it’s after `bar`
-`(?<!bar)foo` | match `foo` if it’s *not* after `bar`
+`foo\|bar` | 匹配 `foo` 或 `bar`
+`foo(?=bar)` | 前瞻：仅当 `foo` 后面紧跟着 `bar` 时才匹配 `foo`（不消耗 `bar`）
+`foo(?!bar)` | 负前瞻：仅当 `foo` 后面不是 `bar` 时才匹配 `foo`
+`(?<=bar)foo` | 后顾：仅当 `foo` 前面是 `bar` 时才匹配 `foo`
+`(?<!bar)foo` | 负后顾：仅当 `foo` 前面不是 `bar` 时才匹配 `foo`
 
-### Grouping and capturing
+> 提示：前瞻/后顾（lookaround）只作判断、不“消耗”字符，适合在匹配中提取定位而不变动原文本。
 
-Expression | Description
+### 分组与捕获（Grouping and capturing）
+
+表达式 | 说明
 :--|:--
-`(foo)` | capturing group; match and capture `foo`
-`(?:foo)` | non-capturing group; match `foo` but *without* capturing `foo`
-`(foo)bar\1` | `\1` is a backreference to the 1st capturing group; match `foobarfoo`
+`(foo)` | 捕获组：匹配并捕获 `foo`，以便后续引用
+`(?:foo)` | 非捕获组：匹配 `foo`，但**不**捕获（有助于提升性能、减少编号）
+`(foo)bar\1` | `\1` 是对第 1 个捕获组的反向引用，可匹配 `foobarfoo`
 
-- Capturing groups are only relevant in the following methods:
+- 捕获组仅在以下方法中起作用：
     - `string.match(regexp)`
     - `string.matchAll(regexp)`
     - `string.replace(regexp, callback)`
-- `\N` is a backreference to the `Nth` capturing group. Capturing groups are numbered starting from 1.
+- `\N` 是对第 `N` 个捕获组的反向引用。捕获组编号从 1 开始。
 
-## References and tools
+## 参考与工具（References and tools）
 
-- [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
-- [RegExplained](https://leaverou.github.io/regexplained/)
+- [MDN 正则表达式指南](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_Expressions)
+- [RegExplained（正则可视化）](https://leaverou.github.io/regexplained/)

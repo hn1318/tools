@@ -1,12 +1,21 @@
 <script setup lang="ts">
-import { codesByCategories } from './http-status-codes.constants';
+import { codesByCategoriesZh, codesByCategoriesEn } from './http-status-codes.constants';
 import { useFuzzySearch } from '@/composable/fuzzySearch';
+import { useI18n } from 'vue-i18n';
+import { computed, ref } from 'vue';
+
+const { locale, t } = useI18n();
+
+const isZh = computed(() => (locale.value || '').startsWith('zh'));
+const codesByCategories = computed(() => (isZh.value ? codesByCategoriesZh : codesByCategoriesEn));
+
+const codesFlat = computed(() => codesByCategories.value.flatMap(({ codes, category }) => codes.map(code => ({ ...code, category }))));
 
 const search = ref('');
 
 const { searchResult } = useFuzzySearch({
   search,
-  data: codesByCategories.flatMap(({ codes, category }) => codes.map(code => ({ ...code, category }))),
+  data: codesFlat,
   options: {
     keys: [{ name: 'code', weight: 3 }, { name: 'name', weight: 2 }, 'description', 'category'],
   },
@@ -14,10 +23,10 @@ const { searchResult } = useFuzzySearch({
 
 const codesByCategoryFiltered = computed(() => {
   if (!search.value) {
-    return codesByCategories;
+    return codesByCategories.value;
   }
 
-  return [{ category: 'Search results', codes: searchResult.value }];
+  return [{ category: t('tools.http-status-codes.searchResults'), codes: searchResult.value }];
 });
 </script>
 
@@ -25,7 +34,7 @@ const codesByCategoryFiltered = computed(() => {
   <div>
     <c-input-text
       v-model:value="search"
-      placeholder="Search http status..."
+      :placeholder="t('tools.http-status-codes.searchPlaceholder')"
       autofocus raw-text mb-10
     />
 

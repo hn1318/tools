@@ -1,12 +1,16 @@
-export const codesByCategories: {
+export type HttpStatusCode = {
+  code: number
+  name: string
+  description: string
+  type: 'HTTP' | 'WebDav'
+};
+
+export type HttpStatusCodeCategory = {
   category: string
-  codes: {
-    code: number
-    name: string
-    description: string
-    type: 'HTTP' | 'WebDav'
-  }[]
-}[] = [
+  codes: HttpStatusCode[]
+};
+
+export const codesByCategoriesZh: HttpStatusCodeCategory[] = [
   {
     category: '1xx 信息性响应',
     codes: [
@@ -52,7 +56,7 @@ export const codesByCategories: {
         type: 'HTTP',
       },
       {
-        code:202,
+        code: 202,
         name: '已接受',
         description: '请求已被接受处理，但处理尚未完成。',
         type: 'HTTP',
@@ -293,13 +297,13 @@ export const codesByCategories: {
         code: 423,
         name: '已锁定',
         description: '正在访问的资源已被锁定。',
-        type: 'HTTP',
+        type: 'WebDav',
       },
       {
         code: 424,
         name: '依赖失败',
         description: '由于前一个请求失败，导致本次请求失败。',
-        type: 'HTTP',
+        type: 'WebDav',
       },
       {
         code: 425,
@@ -388,13 +392,13 @@ export const codesByCategories: {
         code: 507,
         name: '存储空间不足',
         description: '服务器无法存储完成请求所需的表示。',
-        type: 'HTTP',
+        type: 'WebDav',
       },
       {
         code: 508,
         name: '检测到循环',
         description: '服务器在处理请求时检测到无限循环。',
-        type: 'HTTP',
+        type: 'WebDav',
       },
       {
         code: 510,
@@ -406,6 +410,412 @@ export const codesByCategories: {
         code: 511,
         name: '需要网络认证',
         description: '客户端需要进行身份验证才能获得网络访问权限。',
+        type: 'HTTP',
+      },
+    ],
+  },
+];
+
+export const codesByCategoriesEn: HttpStatusCodeCategory[] = [
+  {
+    category: '1xx Informational responses',
+    codes: [
+      {
+        code: 100,
+        name: 'Continue',
+        description: 'Server acknowledges the request headers and asks the client to send the request body.',
+        type: 'HTTP',
+      },
+      {
+        code: 101,
+        name: 'Switching Protocols',
+        description: 'Server has agreed to switch protocols as requested by the client (e.g. to WebSocket).',
+        type: 'HTTP',
+      },
+      {
+        code: 102,
+        name: 'Processing',
+        description: 'Server is processing the request but no response is available yet.',
+        type: 'WebDav',
+      },
+      {
+        code: 103,
+        name: 'Early Hints',
+        description: 'Server returns some response headers before the final HTTP message.',
+        type: 'HTTP',
+      },
+    ],
+  },
+  {
+    category: '2xx Success',
+    codes: [
+      {
+        code: 200,
+        name: 'OK',
+        description: 'Standard response for a successful HTTP request.',
+        type: 'HTTP',
+      },
+      {
+        code: 201,
+        name: 'Created',
+        description: 'The request has succeeded and a new resource has been created.',
+        type: 'HTTP',
+      },
+      {
+        code: 202,
+        name: 'Accepted',
+        description: 'The request has been accepted for processing, but processing is not yet complete.',
+        type: 'HTTP',
+      },
+      {
+        code: 203,
+        name: 'Non-Authoritative Information',
+        description: 'The request succeeded but the content was modified by a transforming proxy.',
+        type: 'HTTP',
+      },
+      {
+        code: 204,
+        name: 'No Content',
+        description: 'The server successfully processed the request and returns no content.',
+        type: 'HTTP',
+      },
+      {
+        code: 205,
+        name: 'Reset Content',
+        description: 'The server asks the client to reset the document view that sent this request.',
+        type: 'HTTP',
+      },
+      {
+        code: 206,
+        name: 'Partial Content',
+        description: 'The server delivers only part of the resource due to a Range request header.',
+        type: 'HTTP',
+      },
+      {
+        code: 207,
+        name: 'Multi-Status',
+        description: 'The body is an XML message that can contain multiple independent status codes.',
+        type: 'WebDav',
+      },
+      {
+        code: 208,
+        name: 'Already Reported',
+        description: 'Members of a DAV binding have already been enumerated in a previous part of the response.',
+        type: 'WebDav',
+      },
+      {
+        code: 226,
+        name: 'IM Used',
+        description: 'The server has fulfilled the request and the response is a representation of the result.',
+        type: 'HTTP',
+      },
+    ],
+  },
+  {
+    category: '3xx Redirection',
+    codes: [
+      {
+        code: 300,
+        name: 'Multiple Choices',
+        description: 'Indicates multiple options for the resource that the client may choose from.',
+        type: 'HTTP',
+      },
+      {
+        code: 301,
+        name: 'Moved Permanently',
+        description: 'The resource and all future requests should be directed to the given URI.',
+        type: 'HTTP',
+      },
+      {
+        code: 302,
+        name: 'Found',
+        description: 'Redirect to another URL. A known conflict between industry practice and the standard.',
+        type: 'HTTP',
+      },
+      {
+        code: 303,
+        name: 'See Other',
+        description: 'The response can be fetched via GET at another URI.',
+        type: 'HTTP',
+      },
+      {
+        code: 304,
+        name: 'Not Modified',
+        description: 'Indicates the resource has not been modified since the version specified in the request headers.',
+        type: 'HTTP',
+      },
+      {
+        code: 305,
+        name: 'Use Proxy',
+        description: 'The requested resource is only reachable via the proxy given in the response.',
+        type: 'HTTP',
+      },
+      {
+        code: 306,
+        name: 'Switch Proxy',
+        description: 'No longer used. Originally meant "subsequent requests should use the specified proxy".',
+        type: 'HTTP',
+      },
+      {
+        code: 307,
+        name: 'Temporary Redirect',
+        description: 'The request should be repeated with another URI, but future requests should still use the original URI.',
+        type: 'HTTP',
+      },
+      {
+        code: 308,
+        name: 'Permanent Redirect',
+        description: 'The request and all future requests should be repeated using another URI.',
+        type: 'HTTP',
+      },
+    ],
+  },
+  {
+    category: '4xx Client errors',
+    codes: [
+      {
+        code: 400,
+        name: 'Bad Request',
+        description: 'The server cannot or will not process the request due to an apparent client error.',
+        type: 'HTTP',
+      },
+      {
+        code: 401,
+        name: 'Unauthorized',
+        description: 'Similar to 403, but specifically for authentication that is required and failed or was not provided.',
+        type: 'HTTP',
+      },
+      {
+        code: 402,
+        name: 'Payment Required',
+        description: 'Reserved for future use. Originally intended for some form of digital cash or micro-payment.',
+        type: 'HTTP',
+      },
+      {
+        code: 403,
+        name: 'Forbidden',
+        description: 'The request was valid but the server refuses to act. The user may lack the necessary permissions.',
+        type: 'HTTP',
+      },
+      {
+        code: 404,
+        name: 'Not Found',
+        description: 'The requested resource could not be found but may be available in the future.',
+        type: 'HTTP',
+      },
+      {
+        code: 405,
+        name: 'Method Not Allowed',
+        description: 'The request method is not supported for the requested resource.',
+        type: 'HTTP',
+      },
+      {
+        code: 406,
+        name: 'Not Acceptable',
+        description: 'The resource can only generate content not acceptable per the Accept header sent.',
+        type: 'HTTP',
+      },
+      {
+        code: 407,
+        name: 'Proxy Authentication Required',
+        description: 'The client must first authenticate with the proxy.',
+        type: 'HTTP',
+      },
+      {
+        code: 408,
+        name: 'Request Timeout',
+        description: 'The server timed out while waiting for the request.',
+        type: 'HTTP',
+      },
+      {
+        code: 409,
+        name: 'Conflict',
+        description: 'The request could not be processed because of a conflict (e.g. an edit conflict).',
+        type: 'HTTP',
+      },
+      {
+        code: 410,
+        name: 'Gone',
+        description: 'The requested resource is no longer available and will not be available again.',
+        type: 'HTTP',
+      },
+      {
+        code: 411,
+        name: 'Length Required',
+        description: 'The request did not specify its length, which is required by the resource.',
+        type: 'HTTP',
+      },
+      {
+        code: 412,
+        name: 'Precondition Failed',
+        description: 'The server does not meet one of the preconditions the requester set.',
+        type: 'HTTP',
+      },
+      {
+        code: 413,
+        name: 'Payload Too Large',
+        description: 'The request is larger than the server is willing or able to process.',
+        type: 'HTTP',
+      },
+      {
+        code: 414,
+        name: 'URI Too Long',
+        description: 'The URI provided was too long for the server to process.',
+        type: 'HTTP',
+      },
+      {
+        code: 415,
+        name: 'Unsupported Media Type',
+        description: 'The media type of the request entity is not supported by the server or resource.',
+        type: 'HTTP',
+      },
+      {
+        code: 416,
+        name: 'Range Not Satisfiable',
+        description: 'The client requested a part of the file the server cannot supply.',
+        type: 'HTTP',
+      },
+      {
+        code: 417,
+        name: 'Expectation Failed',
+        description: 'The server cannot meet the requirements of the Expect request-header field.',
+        type: 'HTTP',
+      },
+      {
+        code: 418,
+        name: "I'm a teapot",
+        description: 'The server refuses to brew coffee with a teapot (RFC 2324, April Fools).',
+        type: 'HTTP',
+      },
+      {
+        code: 421,
+        name: 'Misdirected Request',
+        description: 'The request was directed to a server that cannot produce a response.',
+        type: 'HTTP',
+      },
+      {
+        code: 422,
+        name: 'Unprocessable Entity',
+        description: 'The request was well-formed but cannot be followed due to semantic errors.',
+        type: 'HTTP',
+      },
+      {
+        code: 423,
+        name: 'Locked',
+        description: 'The resource being accessed is locked.',
+        type: 'WebDav',
+      },
+      {
+        code: 424,
+        name: 'Failed Dependency',
+        description: 'The request failed because a previous request failed.',
+        type: 'WebDav',
+      },
+      {
+        code: 425,
+        name: 'Too Early',
+        description: 'The server is unwilling to risk processing a request that might be replayed.',
+        type: 'HTTP',
+      },
+      {
+        code: 426,
+        name: 'Upgrade Required',
+        description: 'The client should switch to a different protocol, such as TLS/1.0.',
+        type: 'HTTP',
+      },
+      {
+        code: 428,
+        name: 'Precondition Required',
+        description: 'The origin server requires the request to be conditional.',
+        type: 'HTTP',
+      },
+      {
+        code: 429,
+        name: 'Too Many Requests',
+        description: 'The user sent too many requests in a given amount of time.',
+        type: 'HTTP',
+      },
+      {
+        code: 431,
+        name: 'Request Header Fields Too Large',
+        description: 'The server is unwilling to process the request because a header field, or all headers together, are too large.',
+        type: 'HTTP',
+      },
+      {
+        code: 451,
+        name: 'Unavailable For Legal Reasons',
+        description: 'The operator has received a legal demand to deny access to a set of resources including the requested one.',
+        type: 'HTTP',
+      },
+    ],
+  },
+  {
+    category: '5xx Server errors',
+    codes: [
+      {
+        code: 500,
+        name: 'Internal Server Error',
+        description: 'A generic error message given when an unexpected condition was encountered and no more specific message is suitable.',
+        type: 'HTTP',
+      },
+      {
+        code: 501,
+        name: 'Not Implemented',
+        description: 'The server either does not recognize the request method or lacks the ability to fulfill it.',
+        type: 'HTTP',
+      },
+      {
+        code: 502,
+        name: 'Bad Gateway',
+        description: 'The server, while acting as a gateway or proxy, received an invalid response from the upstream server.',
+        type: 'HTTP',
+      },
+      {
+        code: 503,
+        name: 'Service Unavailable',
+        description: 'The server is currently unavailable (due to overload or maintenance).',
+        type: 'HTTP',
+      },
+      {
+        code: 504,
+        name: 'Gateway Timeout',
+        description: 'The server, while acting as a gateway or proxy, did not receive a timely response from the upstream server.',
+        type: 'HTTP',
+      },
+      {
+        code: 505,
+        name: 'HTTP Version Not Supported',
+        description: 'The server does not support the HTTP protocol version used in the request.',
+        type: 'HTTP',
+      },
+      {
+        code: 506,
+        name: 'Variant Also Negotiates',
+        description: 'Transparent content negotiation for the request resulted in a circular reference.',
+        type: 'HTTP',
+      },
+      {
+        code: 507,
+        name: 'Insufficient Storage',
+        description: 'The server is unable to store the representation needed to complete the request.',
+        type: 'WebDav',
+      },
+      {
+        code: 508,
+        name: 'Loop Detected',
+        description: 'The server detected an infinite loop while processing the request.',
+        type: 'WebDav',
+      },
+      {
+        code: 510,
+        name: 'Not Extended',
+        description: 'Further extensions to the request are required for the server to fulfill it.',
+        type: 'HTTP',
+      },
+      {
+        code: 511,
+        name: 'Network Authentication Required',
+        description: 'The client must authenticate to gain network access.',
         type: 'HTTP',
       },
     ],

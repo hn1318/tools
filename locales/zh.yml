@@ -109,6 +109,8 @@ tools:
   http-status-codes:
     title: HTTP 状态码
     description: 所有HTTP状态的列表对其名称和含义解释。
+    searchPlaceholder: 搜索 HTTP 状态码...
+    searchResults: 搜索结果
 
   sql-prettify:
     title: SQL 美化和格式化
