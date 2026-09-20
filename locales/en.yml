@@ -7,6 +7,7 @@ home:
   subtitle: 'Handy tools for developers'
   toggleMenu: 'Toggle menu'
   home: Home
+  toolsCount: 'A total of {count} tools'
   nav:
     about: 'About  IT-Tools'
     aboutLabel: 'About'
@@ -122,6 +123,10 @@ tools:
   git-memo:
     title: Git cheatsheet
     description: Git is a decentralized version management software. With this cheatsheet, you will have quick access to the most common git commands.
+
+  docker-memo:
+    title: Docker cheatsheet
+    description: A quick reference of common Docker and Docker Compose commands, covering images, containers, volumes, orchestration and cleanup.
 
   slugify-string:
     title: Slugify string

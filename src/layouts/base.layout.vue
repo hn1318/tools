@@ -25,6 +25,26 @@ const tools = computed<ToolCategory[]>(() => [
   ...(favoriteTools.value.length > 0 ? [{ name: t('tools.categories.favorite-tools'), components: favoriteTools.value }] : []),
   ...toolsByCategory.value,
 ]);
+
+const totalTools = computed(() => toolStore.tools.length);
+
+const now = ref(new Date());
+let clockTimer: ReturnType<typeof setInterval> | undefined;
+const nowText = computed(() => {
+  const d = now.value;
+  const p = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+});
+onMounted(() => {
+  clockTimer = setInterval(() => {
+    now.value = new Date();
+  }, 1000);
+});
+onBeforeUnmount(() => {
+  if (clockTimer) {
+    clearInterval(clockTimer);
+  }
+});
 </script>
 
 <template>
@@ -34,11 +54,7 @@ const tools = computed<ToolCategory[]>(() => [
         <HeroGradient class="gradient" />
         <div class="text-wrapper">
           <div class="title">
-            IT - TOOLS
-          </div>
-          <div class="divider" />
-          <div class="subtitle">
-            {{ $t('home.subtitle') }}
+            TOOLS
           </div>
         </div>
       </RouterLink>
@@ -53,6 +69,22 @@ const tools = computed<ToolCategory[]>(() => [
         </div>
 
         <CollapsibleToolMenu :tools-by-category="tools" />
+
+        <div class="tool-count">
+          {{ $t('home.toolsCount', { count: totalTools }) }}
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="clock">
+            {{ nowText }}
+          </div>
+          <div class="powered-by">
+            Powered by
+            <c-link href="https://hn3.top" target="_blank" rel="noopener">
+              MakerStudio
+            </c-link>
+          </div>
+        </div>
       </div>
     </template>
 
@@ -101,6 +133,34 @@ const tools = computed<ToolCategory[]>(() => [
 .sider-content {
   padding-top: 160px;
   padding-bottom: 40px;
+}
+
+.tool-count {
+  text-align: center;
+  color: #838587;
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+.sidebar-footer {
+  text-align: center;
+  color: #838587;
+  margin-top: 20px;
+  padding: 20px 0;
+
+  .clock {
+    font-size: 13px;
+    margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .powered-by {
+    font-size: 12px;
+
+    a {
+      color: v-bind('themeVars.primaryColor');
+    }
+  }
 }
 
 .hero-wrapper {

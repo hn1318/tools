@@ -67,6 +67,8 @@ declare module '@vue/runtime-core' {
     DateTimeConverter: typeof import('./src/tools/date-time-converter/date-time-converter.vue')['default']
     DeviceInformation: typeof import('./src/tools/device-information/device-information.vue')['default']
     DiffViewer: typeof import('./src/tools/json-diff/diff-viewer/diff-viewer.vue')['default']
+    DockerMemo: typeof import('./src/tools/docker-memo/docker-memo.vue')['default']
+    'DockerMemo.content': typeof import('./src/tools/docker-memo/docker-memo.content.md')['default']
     DockerRunToDockerComposeConverter: typeof import('./src/tools/docker-run-to-docker-compose-converter/docker-run-to-docker-compose-converter.vue')['default']
     DynamicValues: typeof import('./src/tools/benchmark-builder/dynamic-values.vue')['default']
     Editor: typeof import('./src/tools/html-wysiwyg-editor/editor/editor.vue')['default']

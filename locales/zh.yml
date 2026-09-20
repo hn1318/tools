@@ -7,6 +7,7 @@ home:
   subtitle: '助力开发人员和 IT 工作者'
   toggleMenu: '切换菜单'
   home: '主页'
+  toolsCount: '共收录 {count} 个工具'
   nav:
     about: '关于 IT-Tools'
     aboutLabel: '关于'
@@ -40,7 +41,7 @@ tools:
     favorite-tools: '我的收藏'
     crypto: '加密'
     converter: '转换器'
-    web: Web
+    web: '网页'
     images and videos: '图片和视频'
     development: '开发'
     network: '网络'
@@ -121,6 +122,10 @@ tools:
     title: Git 备忘录
     description: Git是一种去中心化的版本管理软件。使用此备忘单，您可以快速访问最常见的git命令.
 
+  docker-memo:
+    title: Docker 备忘录
+    description: Docker 与 Docker Compose 常用命令速查表，涵盖镜像、容器、数据卷、编排与清理等高频操作。
+
   slugify-string:
     title: 打乱字符串
     description: 确保字符串 url、文件名和 id 安全。
@@ -166,7 +171,7 @@ tools:
 
   toml-to-yaml:
     title: TOML 到 YAML
-    description: Parse and convert TOML to YAML.
+    description: 解析 TOML 并将其转换为 YAML。
 
   math-evaluator:
     title: 数学计算器

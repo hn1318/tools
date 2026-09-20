@@ -26,13 +26,13 @@ const collapsedCategories = useStorage<Record<string, boolean>>(
 );
 
 function toggleCategoryCollapse({ name }: { name: string }) {
-  collapsedCategories.value[name] = !collapsedCategories.value[name];
+  collapsedCategories.value[name] = !(collapsedCategories.value[name] ?? true);
 }
 
 const menuOptions = computed(() =>
   toolsByCategory.value.map(({ name, components }) => ({
     name,
-    isCollapsed: collapsedCategories.value[name],
+    isCollapsed: collapsedCategories.value[name] ?? true,
     tools: components.map(tool => ({
       label: makeLabel(tool),
       icon: makeIcon(tool),
